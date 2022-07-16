@@ -1,0 +1,60 @@
+.categ-img-container {
+  flex: 1;
+  flex-direction: column;
+  height: 50vh;
+
+  img {
+    width: 35vh;
+    height: 35vh;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+
+  p {
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 8px;
+    background-color: red;
+  }
+}
+
+.categ-form-container {
+  flex: 1;
+  height: 50vh;
+
+  .upload-img {
+    p {
+      padding: 4px 8px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      color: #00494f;
+      border: 1px solid #00494f;
+      display: inline-block;
+      cursor: pointer;
+
+      &:hover {
+        color: white;
+        background-color: #00494f;
+      }
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+  }
+
+  .text-input {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+
+  .submit-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    background-color: #00494f;
+    cursor: pointer;
+  }
+}

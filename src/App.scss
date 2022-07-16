@@ -1,0 +1,20 @@
+$primaryColor: #00494f;
+
+.app-container {
+  display: flex;
+  width: 100%;
+
+  .body-container {
+    flex: 6;
+  }
+}
+
+.title {
+  color: rgb(168, 168, 168);
+}
+
+.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
