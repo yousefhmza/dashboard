@@ -1,17 +1,29 @@
 import React from "react";
 import ErrorIcon from "@mui/icons-material/Error";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const MultipleImagesPreview = ({ images, error }) => {
+const MultipleImagesPreview = ({ formik }) => {
   return (
     <div className="product-imgs-container">
-      {images.length !== 0 ? (
-        images.map((img, index) => {
+      {formik.values.images.length !== 0 ? (
+        formik.values.images.map((img, index) => {
           return (
-            <img
-              key={index}
-              src={typeof img === "string" ? img : URL.createObjectURL(img)}
-              alt="img"
-            />
+            <div className="img-container">
+              <DeleteIcon
+                className="delete-icon"
+                onClick={() => {
+                  formik.setFieldValue(
+                    "images",
+                    formik.values.images.filter((image, i) => i !== index)
+                  );
+                }}
+              />
+              <img
+                key={index}
+                src={typeof img === "string" ? img : URL.createObjectURL(img)}
+                alt="img"
+              />
+            </div>
           );
         })
       ) : (
@@ -20,10 +32,10 @@ const MultipleImagesPreview = ({ images, error }) => {
           alt="img"
         />
       )}
-      {error && (
+      {formik.errors.images && formik.touched.images && (
         <div className="no-images">
           <ErrorIcon />
-          <p>{error}</p>
+          <p>{formik.errors.images}</p>
         </div>
       )}
     </div>

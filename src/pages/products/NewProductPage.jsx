@@ -56,14 +56,7 @@ const NewProductPage = () => {
         <h2 className="title">Add new product in {categoryName}</h2>
       </CardWrapper>
       <CardWrapper>
-        <MultipleImagesPreview
-          images={formik.values.images}
-          error={
-            formik.errors.images && formik.touched.images
-              ? formik.errors.images
-              : null
-          }
-        />
+        <MultipleImagesPreview formik={formik} />
         <form className="product-form" onSubmit={formik.handleSubmit}>
           <label className="upload-img">
             <p>Upload image</p>
@@ -168,8 +161,8 @@ const NewProductPage = () => {
               name="isFeatured"
               type="checkbox"
               value={formik.values.isFeatured}
-              onChange={() => {
-                formik.values.isFeatured = !formik.values.isFeatured;
+              onChange={(event) => {
+                formik.setFieldValue("isFeatured", event.target.checked);
               }}
             />
             <label htmlFor="isFeatured">Is featured</label>

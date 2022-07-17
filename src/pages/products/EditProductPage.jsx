@@ -17,21 +17,19 @@ const EditProductPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
 
-  const { isLoading, isError, data } = useQuery(
+  const { isLoading, data } = useQuery(
     `product-details-${productId}`,
     () =>
       axiosInstance.get(endPoints.fetchProduct, { params: { id: productId } }),
     {
+      cacheTime: 0,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        console.log(data);
-      },
     }
   );
 
   const { isLoading: isPatching, mutate } = useMutation(
-    (data) => axiosInstance.post(endPoints.editProduct, data),
+    (data) => axiosInstance.put(endPoints.editProduct, data),
     {
       onSuccess: (data) => navigate(-1),
     }
@@ -49,12 +47,14 @@ const EditProductPage = () => {
           discount: data.data.data.discount,
           isFeatured: data.data.data.isFeatured,
           images: data.data.data.images,
-          sizes: [],
+          sizes: data.data.data.size,
         }
       : newProductInitValues,
     validationSchema: ProductSchema,
     onSubmit: (values) => {
+      console.log("djbfvhdb");
       let formdata = new FormData();
+      formdata.append("id", productId);
       formdata.append("name_en", values.name_en);
       formdata.append("name_ar", values.name_ar);
       formdata.append("description_en", values.desc_en);
@@ -66,7 +66,8 @@ const EditProductPage = () => {
         formdata.append(`images`, image);
       }
       values.sizes.map((size, index) => {
-        formdata.append(`size[${index}][name]`, size.name);
+        formdata.append(`size[${index}][name_en]`, size.name_en);
+        formdata.append(`size[${index}][name_ar]`, size.name_ar);
         formdata.append(`size[${index}][price]`, size.price);
         return null;
       });
@@ -79,14 +80,7 @@ const EditProductPage = () => {
       {isLoading && <LoadingSpinner />}
       {data && (
         <CardWrapper>
-          <MultipleImagesPreview
-            images={formik.values.images}
-            error={
-              formik.errors.images && formik.touched.images
-                ? formik.errors.images
-                : null
-            }
-          />
+          <MultipleImagesPreview formik={formik} />
           <form className="product-form" onSubmit={formik.handleSubmit}>
             <label className="upload-img">
               <p>Upload image</p>
@@ -190,9 +184,10 @@ const EditProductPage = () => {
                 id="isFeatured"
                 name="isFeatured"
                 type="checkbox"
+                checked={formik.values.isFeatured}
                 value={formik.values.isFeatured}
-                onChange={() => {
-                  formik.values.isFeatured = !formik.values.isFeatured;
+                onChange={(event) => {
+                  formik.setFieldValue("isFeatured", event.target.checked);
                 }}
               />
               <label htmlFor="isFeatured">Is featured</label>
@@ -200,15 +195,28 @@ const EditProductPage = () => {
             {formik.values.sizes.map((size, index) => (
               <div key={index} className="size-box">
                 <TextInput
-                  id={`name-field-${index}`}
-                  name={`sizes[${index}].name`}
-                  label="Name"
-                  value={formik.values.sizes[index].name}
+                  id={`name_en-field-${index}`}
+                  name={`sizes[${index}].name_en`}
+                  label="English name"
+                  value={formik.values.sizes[index].name_en}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={
                     formik.errors.sizes && formik.touched.sizes
-                      ? formik.errors.sizes[index]?.name
+                      ? formik.errors.sizes[index]?.name_en
+                      : null
+                  }
+                />
+                <TextInput
+                  id={`name_ar-field-${index}`}
+                  name={`sizes[${index}].name_ar`}
+                  label="Arabic name"
+                  value={formik.values.sizes[index].name_ar}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.errors.sizes && formik.touched.sizes
+                      ? formik.errors.sizes[index]?.name_ar
                       : null
                   }
                 />
@@ -253,7 +261,7 @@ const EditProductPage = () => {
               <LoadingSpinner />
             ) : (
               <button className="submit-btn" type={"submit"}>
-                Add
+                Edit
               </button>
             )}
           </form>

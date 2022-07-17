@@ -1,5 +1,24 @@
 .product-imgs-container {
   flex: 1;
+  display: flex;
+
+  .delete-icon {
+    color: white;
+    background-color: gray;
+    padding: 4px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+    position: absolute;
+    margin: 8px;
+
+    &:hover {
+      color: red;
+      background-color: black;
+    }
+  }
 
   img {
     height: 20vh;
