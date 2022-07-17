@@ -1,14 +1,13 @@
-import { DataGrid } from "@mui/x-data-grid";
-import React from "react";
 import "./CategoryProductsPage.scss";
+import { DataGrid } from "@mui/x-data-grid";
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, useParams } from "react-router-dom";
-import SectionTitle from "../../components/molecules/SectionTitle/SectionTitle";
 import { axiosInstance } from "../../utils/axios/axios";
-import endPoints from "../../utils/axios/end-points";
-import { columns } from "../../utils/products-datasource/columns";
+import { columns } from "../../utils/datasource/columns";
 import AppDialog from "../../components/atoms/AppDialog/AppDialog";
-import { useState } from "react";
+import SectionTitle from "../../components/molecules/SectionTitle/SectionTitle";
+import endPoints from "../../utils/axios/end-points";
 
 const CategoryProductsPage = () => {
   const queryClient = useQueryClient();
@@ -55,7 +54,7 @@ const CategoryProductsPage = () => {
       price: product.price,
       discount: product.discount,
       isFeatured: product.isFeatured,
-      category: product.category.name_en,
+      category: product.category.name,
     };
   });
 

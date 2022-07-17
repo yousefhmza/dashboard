@@ -9,3 +9,14 @@ export const newProductInitValues = {
   images: [],
   sizes: [],
 };
+
+export const newOfferInitValues = {
+  name_en: "",
+  name_ar: "",
+  desc_en: "",
+  desc_ar: "",
+  price: null,
+  discount: null,
+  img: "",
+  productIds: [],
+};

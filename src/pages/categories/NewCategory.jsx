@@ -10,6 +10,7 @@ import LoadingSpinner from "../../components/atoms/LoadingSpinner/LoadingSpinner
 import { axiosInstance } from "../../utils/axios/axios";
 import endPoints from "../../utils/axios/end-points";
 import { useNavigate } from "react-router-dom";
+import ImgPreview from "../../components/molecules/ImgPreview/ImgPreview";
 
 const initialValues = {
   name_en: "",
@@ -55,19 +56,12 @@ const NewCategory = () => {
         <h2 className="title">Add new Category</h2>
       </CardWrapper>
       <CardWrapper>
-        <div className="categ-img-container center-content">
-          <img
-            src={
-              formik.values.img
-                ? URL.createObjectURL(formik.values.img)
-                : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-            }
-            alt="img"
-          />
-          {formik.errors.img && formik.touched.img && (
-            <p>{formik.errors.img}</p>
-          )}
-        </div>
+        <ImgPreview
+          image={formik.values.img}
+          error={
+            formik.errors.img && formik.touched.img ? formik.errors.img : null
+          }
+        />
         <form className="categ-form-container" onSubmit={formik.handleSubmit}>
           <label className="upload-img">
             <p>Upload image</p>

@@ -135,6 +135,7 @@ const NewProductPage = () => {
               label="Price"
               placeholder="250"
               type="number"
+              min={0}
               value={formik.values.price}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

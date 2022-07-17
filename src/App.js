@@ -1,5 +1,11 @@
 import "./style/dark.scss";
 import "./App.scss";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { Routes, Route } from "react-router-dom";
+import { userInputs } from "./formSource";
+import { useContext } from "react";
+import { DarkModeContext } from "./context/darkModeContext";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import List from "./pages/list/List";
@@ -12,14 +18,11 @@ import ProductsCategoriesPage from "./pages/products/ProductsCategoriesPage";
 import Sidebar from "./components/organisms/sidebar/Sidebar";
 import Navbar from "./components/organisms/navbar/Navbar";
 import CategoryProductsPage from "./pages/products/CategoryProductsPage";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-import { Routes, Route } from "react-router-dom";
-import { userInputs } from "./formSource";
-import { useContext } from "react";
-import { DarkModeContext } from "./context/darkModeContext";
 import NewProductPage from "./pages/products/NewProductPage";
 import EditProductPage from "./pages/products/EditProductPage";
+import OffersPage from "./pages/offers/OffersPage";
+import NewOfferPage from "./pages/offers/NewOfferPage";
+import EditOfferPage from "./pages/offers/EditOfferPage";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +66,14 @@ function App() {
                   <Route
                     path=":categoryId/:categoryName/edit-product/:productId"
                     element={<EditProductPage />}
+                  />
+                </Route>
+                <Route path="offers">
+                  <Route index element={<OffersPage />} />
+                  <Route path="new-offer" element={<NewOfferPage />} />
+                  <Route
+                    path="edit-offer/:offerId"
+                    element={<EditOfferPage />}
                   />
                 </Route>
               </Route>

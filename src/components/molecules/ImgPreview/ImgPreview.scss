@@ -1,0 +1,19 @@
+.img-container {
+  flex: 1;
+  flex-direction: column;
+
+  img {
+    width: 35vh;
+    height: 35vh;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+
+  p {
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 8px;
+    background-color: red;
+  }
+}

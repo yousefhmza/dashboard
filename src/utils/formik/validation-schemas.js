@@ -15,3 +15,13 @@ export const ProductSchema = Yup.object({
     })
   ),
 });
+
+export const offerSchema = Yup.object({
+  name_en: Yup.string().required("Required!!"),
+  name_ar: Yup.string().required("Required!!"),
+  desc_en: Yup.string().required("Required!!"),
+  desc_ar: Yup.string().required("Required!!"),
+  price: Yup.number().nullable().required("Required!!"),
+  discount: Yup.number().nullable().required("Required!!"),
+  img: Yup.mixed().required("Please upload an image!!"),
+});

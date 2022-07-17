@@ -1,4 +1,5 @@
 import "./sidebar.scss";
+import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -9,7 +10,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Link } from "react-router-dom";
+import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 
 const Sidebar = () => {
   return (
@@ -40,6 +41,12 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span>Products</span>
+            </li>
+          </Link>
+          <Link to="/offers" style={{ textDecoration: "none" }}>
+            <li>
+              <LocalOfferOutlinedIcon className="icon" />
+              <span>Offers</span>
             </li>
           </Link>
           <Link to="/users" style={{ textDecoration: "none" }}>
