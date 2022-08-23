@@ -6,7 +6,9 @@ const ImgPreview = ({ image, error }) => {
       <img
         src={
           image
-            ? URL.createObjectURL(image)
+            ? typeof image === "string"
+              ? image
+              : URL.createObjectURL(image)
             : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
         }
         alt="img"

@@ -18,5 +18,5 @@ export const newOfferInitValues = {
   price: null,
   discount: null,
   img: "",
-  productIds: [],
+  productsIds: [],
 };

@@ -1,17 +1,44 @@
 import "./OfferPage.scss";
 import { useFormik } from "formik";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../utils/axios/axios";
 import { newOfferInitValues } from "../../utils/formik/init-values";
 import { offerSchema } from "../../utils/formik/validation-schemas";
 import CardWrapper from "../../components/atoms/CardWrapper/CardWrapper";
 import ImgPreview from "../../components/molecules/ImgPreview/ImgPreview";
 import TextInput from "../../components/atoms/TextInput/TextInput";
 import SelectedProducts from "./components/SelectedProducts";
+import endPoints from "../../utils/axios/end-points";
+import LoadingSpinner from "../../components/atoms/LoadingSpinner/LoadingSpinner";
 
 const NewOfferPage = () => {
+  const navigate = useNavigate();
+  const { isLoading, mutate } = useMutation(
+    (data) => axiosInstance.post(endPoints.addOffer, data),
+    {
+      onSuccess: () => navigate(-1),
+    }
+  );
+
   const formik = useFormik({
     initialValues: newOfferInitValues,
     validationSchema: offerSchema,
-    onSubmit: () => {},
+    onSubmit: (values) => {
+      let formdata = new FormData();
+      formdata.append("name_en", values.name_en);
+      formdata.append("name_ar", values.name_ar);
+      formdata.append("description_en", values.desc_en);
+      formdata.append("description_ar", values.desc_ar);
+      formdata.append("price", values.price);
+      formdata.append("discount", values.discount);
+      formdata.append("img", values.img);
+      values.productsIds.map((id, index) => {
+        formdata.append(`productIds[${index}]`, id);
+        return null;
+      });
+      mutate(formdata);
+    },
   });
 
   return (
@@ -69,7 +96,7 @@ const NewOfferPage = () => {
               <textarea
                 id="desc_en"
                 name="desc_en"
-                placeholder="Product description"
+                placeholder="Offer description"
                 value={formik.values.desc_en}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -126,10 +153,14 @@ const NewOfferPage = () => {
               }
             />
           </div>
-          <SelectedProducts />
-          <button className="submit-btn" type={"submit"}>
-            Add
-          </button>
+          <SelectedProducts formik={formik} isEditing={false} />
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <button className="submit-btn" type={"submit"}>
+              Add
+            </button>
+          )}
         </form>
       </CardWrapper>
     </>

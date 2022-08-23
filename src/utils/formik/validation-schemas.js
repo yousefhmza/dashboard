@@ -24,4 +24,5 @@ export const offerSchema = Yup.object({
   price: Yup.number().nullable().required("Required!!"),
   discount: Yup.number().nullable().required("Required!!"),
   img: Yup.mixed().required("Please upload an image!!"),
+  productsIds: Yup.array().min(1, "Please selected one product at least"),
 });

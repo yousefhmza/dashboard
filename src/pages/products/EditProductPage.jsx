@@ -52,7 +52,6 @@ const EditProductPage = () => {
       : newProductInitValues,
     validationSchema: ProductSchema,
     onSubmit: (values) => {
-      console.log("djbfvhdb");
       let formdata = new FormData();
       formdata.append("id", productId);
       formdata.append("name_en", values.name_en);
